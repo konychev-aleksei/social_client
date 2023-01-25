@@ -1,0 +1,42 @@
+.header {
+  margin: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 40px;
+  width: 110px;
+  padding-right: 145px;
+}
+
+.myProfile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+
+  & > img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  width: 140px;
+
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  font-style: italic;
+  letter-spacing: 4px;
+}
