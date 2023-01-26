@@ -41,4 +41,15 @@ const categories = [
   },
 ];
 
+export const categoriesList = {
+  1: "Дизайн",
+  2: "Архитектура",
+  3: "Искусство",
+  4: "Путешествия",
+  5: "Природа",
+  6: "Стиль",
+  7: "Животные",
+  8: "Фитнес",
+}
+
 export default categories;

@@ -40,8 +40,12 @@ const Header = () => {
     const tag = params.get("tag");
     const query = params.get("query");
 
+    if (tag) {
+      setValue("tag", tag);
+    }
+
     if (query) {
-      setValue("tag", query);
+      setValue("query", query);
     }
   }, []);
 
@@ -62,7 +66,13 @@ const Header = () => {
 
   return (
     <div className={style.header}>
-      <Link to="/search" className={style.logo}>Фотогалерея</Link>
+      <Link to="/search">
+        <img
+          className={style.logo}
+          src="https://sunrust.org/wiki/images/a/a9/Gallery_icon.png"
+          alt=""
+        />
+      </Link>
       <form className={style.search} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           placeholder="Поиск"

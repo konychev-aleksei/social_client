@@ -14,11 +14,16 @@ const Form = () => {
     register,
     handleSubmit,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm();
 
-  const handleChangeFile = (event) => {
-    const url = URL.createObjectURL(event.target.files[0]);
+  console.log(errors);
+
+  const handleChangeFile = async (event) => {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+
     setFileUrl(url);
   };
 
@@ -29,18 +34,15 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
       <label>
-        <img
-          className={style.image}
-          src={fileUrl}
-          alt=""
-        />
+        <img className={style.image} src={fileUrl} alt="" />
         <input
           type="file"
-          {...register("file", { required: true })}
+          accept="image/*"
+          name="shit"
+          {...register("shit", { required: true, onChange: handleChangeFile })}
           hidden
-          onChange={handleChangeFile}
         />
-        {errors.file && (
+        {Boolean(errors.shit) && (
           <p className={style.error}>Необходимо приложить файл</p>
         )}
       </label>
@@ -53,8 +55,8 @@ const Form = () => {
             message: "Поле обязательно",
           },
           maxLength: {
-            value: 10,
-            message: "Максимальная длина - 10 символов",
+            value: 30,
+            message: "Максимальная длина - 30 символов",
           },
         })}
         error={Boolean(errors.location)}

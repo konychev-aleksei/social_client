@@ -1,5 +1,5 @@
 .header {
-  margin: 30px;
+  margin: 15px 30px;
   display: flex;
   align-items: center;
 }
@@ -8,12 +8,6 @@
   flex: 1;
   display: flex;
   justify-content: center;
-}
-
-.logo {
-  height: 40px;
-  width: 110px;
-  padding-right: 145px;
 }
 
 .myProfile {
@@ -37,6 +31,7 @@
 }
 
 .logo {
-  font-style: italic;
-  letter-spacing: 4px;
+  height: 50px;
+  width: 50px;
+  padding-right: 220px;
 }
