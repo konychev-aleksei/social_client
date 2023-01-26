@@ -1,10 +1,11 @@
 import style from "./style.module.scss";
-import { CardHeader, IconButton, TextField, Button } from "@mui/material";
+import { CardHeader, IconButton, TextField, Button, Chip } from "@mui/material";
 import { Favorite, FavoriteBorder, Edit } from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useGetByIdQuery } from "../../app/reducers/postApi";
 import categories, { categoriesList } from "../../constants/categories";
+import { requiredMax } from "../Form/Form";
 
 const LeaveComment = () => {
   const {
@@ -20,16 +21,7 @@ const LeaveComment = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.leaveComment}>
       <TextField
-        {...register("comment", {
-          required: {
-            value: true,
-            message: "Поле обязательно",
-          },
-          maxLength: {
-            value: 10,
-            message: "Максимум - 100 символов",
-          },
-        })}
+        {...register("comment", requiredMax(100))}
         variant="standard"
         placeholder="Комментарий"
         className={style.field}
@@ -89,7 +81,7 @@ const Post = () => {
       <div className={style.tags}>
         {tags.map((tag) => (
           <Link to={`/search?tag=${tag}`} className={style.tag}>
-            #{categoriesList[tag]}
+            <Chip label={categoriesList[tag]} />
           </Link>
         ))}
       </div>

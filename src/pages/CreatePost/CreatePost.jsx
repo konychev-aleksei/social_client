@@ -8,7 +8,7 @@ const CreatePost = () => {
     <>
       <Header />
       <div className={style.wrapper}>
-        <Form />
+        <Form isCreation />
       </div>
     </>
   );

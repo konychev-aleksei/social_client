@@ -72,6 +72,7 @@ const Header = () => {
           src="https://sunrust.org/wiki/images/a/a9/Gallery_icon.png"
           alt=""
         />
+        <p>Фотогалаеря</p>
       </Link>
       <form className={style.search} onSubmit={handleSubmit(onSubmit)}>
         <TextField

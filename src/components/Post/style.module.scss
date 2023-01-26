@@ -32,6 +32,7 @@
   & span {
     letter-spacing: 2px;
     font-size: 15px;
+    margin: 5px 0;
 
     &:nth-child(1) {
       font-weight: bold;
@@ -46,7 +47,7 @@
 }
 
 .about {
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 14px;
   line-height: 24px;
 }
@@ -61,8 +62,11 @@
 .tag {
   font-size: 14px;
   color: black;
-  font-weight: bold;
   text-decoration: none;
+
+  & > * {
+    cursor: pointer !important;
+  }
 }
 
 .comments {

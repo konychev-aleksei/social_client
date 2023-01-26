@@ -4,31 +4,60 @@ import { Done, Clear } from "@mui/icons-material";
 import style from "./style.module.scss";
 
 import tagsList from "../../constants/tags";
+import categories from "../../constants/categories";
 import { useForm } from "react-hook-form";
 
-const Form = () => {
-  const [fileUrl, setFileUrl] = useState(
-    "https://www.accbc.org/wp-content/themes/customizr-pro/assets/front/img/slide-placeholder.png"
-  );
+import {
+  useCreateMutation,
+  useUpdateByIdMutation,
+} from "../../app/reducers/postApi";
+
+export const requiredMax = (maxLength) => ({
+  required: {
+    value: true,
+    message: "Поле обязательно",
+  },
+  maxLength: {
+    value: maxLength,
+    message: `Максимальная длина - ${maxLength} символов`,
+  },
+});
+
+const Form = ({ isCreation }) => {
+  const id = 1;
+  const [fileUrl, setFileUrl] = useState("/image_placeholder.png");
   const {
     register,
     handleSubmit,
     setValue,
-    trigger,
     formState: { errors },
   } = useForm();
 
-  console.log(errors);
+  const [create] = useCreateMutation();
+  const [updateById] = useUpdateByIdMutation();
 
-  const handleChangeFile = async (event) => {
+  const handleChangeImage = async (event) => {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
 
     setFileUrl(url);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const { location, description, tags, image } = data;
+
+    const formData = new FormData();
+
+    formData.append("location", location);
+    formData.append("description", description);
+    formData.append("tags", tags);
+    formData.append("image", image[0]);
+
+    if (isCreation) {
+      create(formData);
+    } else {
+      updateById(id, formData);
+    }
   };
 
   return (
@@ -38,8 +67,11 @@ const Form = () => {
         <input
           type="file"
           accept="image/*"
-          name="shit"
-          {...register("shit", { required: true, onChange: handleChangeFile })}
+          name="image"
+          {...register("image", {
+            required: true,
+            onChange: handleChangeImage,
+          })}
           hidden
         />
         {Boolean(errors.shit) && (
@@ -49,16 +81,7 @@ const Form = () => {
       <TextField
         size="small"
         label="Местоположение"
-        {...register("location", {
-          required: {
-            value: true,
-            message: "Поле обязательно",
-          },
-          maxLength: {
-            value: 30,
-            message: "Максимальная длина - 30 символов",
-          },
-        })}
+        {...register("location", requiredMax(30))}
         error={Boolean(errors.location)}
         helperText={errors.location?.message}
       />
@@ -66,23 +89,14 @@ const Form = () => {
         size="small"
         label="Описание"
         multiline
-        {...register("description", {
-          required: {
-            value: true,
-            message: "Поле обязательно",
-          },
-          maxLength: {
-            value: 200,
-            message: "Максимальная длина - 200 символов",
-          },
-        })}
+        {...register("description", requiredMax(200))}
         error={Boolean(errors.description)}
         helperText={errors.description?.message}
       />
       <Autocomplete
         multiple
-        options={tagsList}
-        getOptionLabel={(option) => option.title}
+        options={categories}
+        getOptionLabel={(option) => option.name}
         defaultValue={[]}
         filterSelectedOptions
         renderInput={(params) => <TextField {...params} label="Теги" />}
