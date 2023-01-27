@@ -10,9 +10,6 @@ export const postApi = createApi({
     getById: builder.query({
       query: (id) => `get?id=${id}`,
     }),
-    getByNick: builder.query({
-      query: (nick) => `index?nick=${nick}`,
-    }),
     search: builder.query({
       query: (id) => `post?id=${id}`,
       invalidatesTags: ["Post"],

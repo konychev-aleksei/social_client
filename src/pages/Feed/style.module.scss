@@ -1,11 +1,10 @@
 .wrapper {
   display: flex;
+  justify-content: center;
+  margin: 35px auto;
+
   flex-direction: column;
-
-  margin: 20px auto;
   width: min(1000px, 100vw);
-
-  gap: 30px;
 }
 
 .grid {

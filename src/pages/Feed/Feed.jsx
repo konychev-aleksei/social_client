@@ -103,6 +103,12 @@ const sx = {
 };
 
 const NewPostButton = () => {
+  const { displayName } = useSelector(getCurrentUser);
+
+  if (!displayName) {
+    return null;
+  }
+
   return (
     <Link className={style.createNewPost} to="/post/create">
       <Button sx={sx}>
@@ -112,20 +118,22 @@ const NewPostButton = () => {
   );
 };
 
-const Feed = () => {
-  const { displayName } = useSelector(getCurrentUser);
+export const PostsList = () => (
+  <div className={style.grid}>
+    {posts.map((post) => (
+      <SmallPost {...post} />
+    ))}
+  </div>
+);
 
+const Feed = () => {
   return (
     <>
       <Header />
       <div className={style.wrapper}>
         <Categories />
-        <div className={style.grid}>
-          {posts.map((post) => (
-            <SmallPost {...post} />
-          ))}
-        </div>
-        {displayName && <NewPostButton />}
+        <PostsList />
+        <NewPostButton />
       </div>
     </>
   );

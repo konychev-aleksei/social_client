@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = "http://localhost:5050/comment/";
+const baseUrl = "http://localhost:5005/comment/";
 
 export const commentApi = createApi({
   reducerPath: "commentApi",
@@ -9,7 +9,7 @@ export const commentApi = createApi({
     getByPostId: builder.query({
       query: (postId) => `get?id=${postId}`,
     }),
-    create: builder.query({
+    create: builder.mutation({
       query: (comment) => ({
         url: `create`,
         method: "POST",
@@ -17,7 +17,7 @@ export const commentApi = createApi({
       }),
       invalidatesTags: ["Comment"],
     }),
-    deleteById: builder.query({
+    deleteById: builder.mutation({
       query: (commentId) => ({
         url: `delete?id=${commentId}`,
         method: "DELETE",
@@ -27,4 +27,5 @@ export const commentApi = createApi({
   }),
 });
 
-export const { usePostByQuery } = commentApi;
+export const { useGetByPostIdQuery, useCreateQuery, useDeleteByIdMutation } =
+  commentApi;

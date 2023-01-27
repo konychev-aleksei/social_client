@@ -13,7 +13,7 @@ const Categories = () => {
       {categories.map((category) => (
         <Link
           className={cn(style.category, tag == category.tag && style.selected)}
-          to={`/search?tag=${category.tag}`}
+          to={`/home?tag=${category.tag}`}
         >
           <img src={category.image} alt="" />
           <p>{category.name}</p>

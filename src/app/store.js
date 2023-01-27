@@ -10,7 +10,7 @@ const store = configureStore({
     [commentApi.reducerPath]: commentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(postApi.middleware),
+    getDefaultMiddleware().concat([postApi.middleware, commentApi.middleware]),
 });
 
 export default store;

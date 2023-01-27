@@ -2,11 +2,9 @@ import { useState } from "react";
 import { TextField, Button, Autocomplete } from "@mui/material";
 import { Done, Clear } from "@mui/icons-material";
 import style from "./style.module.scss";
-
-import tagsList from "../../constants/tags";
 import categories from "../../constants/categories";
 import { useForm } from "react-hook-form";
-
+import { useParams } from "react-router-dom";
 import {
   useCreateMutation,
   useUpdateByIdMutation,
@@ -24,7 +22,7 @@ export const requiredMax = (maxLength) => ({
 });
 
 const Form = ({ isCreation }) => {
-  const id = 1;
+  const { id } = useParams();
   const [fileUrl, setFileUrl] = useState("/image_placeholder.png");
   const {
     register,
@@ -74,17 +72,10 @@ const Form = ({ isCreation }) => {
           })}
           hidden
         />
-        {Boolean(errors.shit) && (
+        {Boolean(errors.image) && (
           <p className={style.error}>Необходимо приложить файл</p>
         )}
       </label>
-      <TextField
-        size="small"
-        label="Местоположение"
-        {...register("location", requiredMax(30))}
-        error={Boolean(errors.location)}
-        helperText={errors.location?.message}
-      />
       <TextField
         size="small"
         label="Описание"

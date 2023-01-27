@@ -4,34 +4,30 @@
   align-items: center;
 }
 
-.search {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
 .myProfile {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-end;
   padding-right: 10px;
-
-  & > img {
-    width: 36px;
-    height: 36px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
-  width: 140px;
-
+  font-size: 14px;
   text-decoration: none;
   color: black;
+  letter-spacing: 2px !important;
+  text-align: right;
 }
 
 .logo {
   height: 50px;
   width: 50px;
-  padding-right: 220px;
+}
+
+.home {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  text-decoration: none;
+  flex: 1;
+
+  & > p {
+    color: rgb(7, 155, 192);
+    font-size: 20px;
+    letter-spacing: 4px !important;
+  }
 }
