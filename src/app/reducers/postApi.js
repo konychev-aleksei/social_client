@@ -54,6 +54,9 @@ export const postApi = createApi({
       query: (id) => ({
         url: `toggle-like?id=${id}`,
         method: "PATCH",
+        headers: {
+          token: sessionStorage.getItem("auth"),
+        },
       }),
       invalidatesTags: ["Post"],
     }),

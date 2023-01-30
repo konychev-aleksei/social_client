@@ -1,11 +1,5 @@
 import style from "./style.module.scss";
-import { Button } from "@mui/material";
-import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-
-const sx = {
-  color: "black",
-};
 
 const SmallPost = ({ id, author_nick }) => {
   const imageSource = "http://localhost:5005/image/" + 1 + ".png";
