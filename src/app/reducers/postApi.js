@@ -18,7 +18,7 @@ export const postApi = createApi({
       },
     }),
     get: builder.query({
-      query: (tag = "") => `get?tag=${tag}`,
+      query: (tag) => `get?tag=${tag ?? ""}`,
       invalidatesTags: ["Post"],
     }),
     create: builder.mutation({
