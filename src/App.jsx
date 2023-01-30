@@ -1,21 +1,24 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
-import Feed from "./pages/Feed/Feed";
-
+import HomePage from "./pages/Home/Home";
+import NewPostPage from "./pages/NewPost/NewPost";
 import PostPage from "./pages/Post/Post";
-import CreatePost from "./pages/CreatePost/CreatePost";
+
+import Header from "./components/Header/Header";
 import useAuth from "./hooks/useAuth";
+
+import "./style.module.scss";
 
 const App = () => {
   useAuth();
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route path="/home" element={<Feed />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/post">
           <Route path=":id" element={<PostPage />} />
-          <Route path="create" element={<CreatePost isCreation />} />
+          <Route path="create" element={<NewPostPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import categories from "../../constants/categories";
 
 const baseUrl = "http://localhost:5005/post";
 
@@ -8,10 +9,16 @@ export const postApi = createApi({
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getById: builder.query({
-      query: (id) => `get?id=${id}`,
+      query: (id) => `index?id=${id}`,
+      transformResponse: (response) => {
+        const tags = response.tags.map((tag) => {
+          return categories.find((category) => category.tag === tag);
+        });
+        return { ...response, tags };
+      },
     }),
-    search: builder.query({
-      query: (id) => `post?id=${id}`,
+    get: builder.query({
+      query: (tag = "") => `get?tag=${tag}`,
       invalidatesTags: ["Post"],
     }),
     create: builder.mutation({
@@ -19,14 +26,20 @@ export const postApi = createApi({
         url: `create`,
         method: "POST",
         body: post,
+        headers: {
+          token: sessionStorage.getItem("auth"),
+        },
       }),
       invalidatesTags: ["Post"],
     }),
     updateById: builder.mutation({
-      query: (post) => ({
-        url: `update?id=${postId}`,
+      query: ({ id, post }) => ({
+        url: `update?id=${id}`,
         method: "PUT",
         body: post,
+        headers: {
+          token: sessionStorage.getItem("auth"),
+        },
       }),
       invalidatesTags: ["Post"],
     }),
@@ -39,7 +52,7 @@ export const postApi = createApi({
     }),
     toggleLike: builder.mutation({
       query: (id) => ({
-        url: `post?id=${id}`,
+        url: `toggle-like?id=${id}`,
         method: "PATCH",
       }),
       invalidatesTags: ["Post"],
@@ -49,8 +62,7 @@ export const postApi = createApi({
 
 export const {
   useGetByIdQuery,
-  useGetByNickQuery,
-  useSearchQuery,
+  useGetQuery,
   useCreateMutation,
   useUpdateByIdMutation,
   useDeleteByIdMutation,

@@ -9,7 +9,7 @@ import firebase from "firebase/compat/app";
 
 const Header = () => {
   const { nick } = useSelector(getCurrentUser);
-  
+
   const handleSignIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
@@ -21,20 +21,16 @@ const Header = () => {
 
   const homePageLink = (
     <Link to="/home" className={style.home}>
-      <img
-        className={style.logo}
-        src="/logo.png"
-        alt=""
-      />
+      <img className={style.logo} src="/logo.png" alt="" />
       <p>Фотогалерея</p>
     </Link>
   );
 
   const authButton = nick ? (
     <>
-      <Link className={style.myProfile} to={`/profile/${nick}`}>
+      <p className={style.myProfile} to={`/profile/${nick}`}>
         {nick}
-      </Link>
+      </p>
       <Button startIcon={<LogoutOutlined />} onClick={handleLogOut}>
         Выйти
       </Button>

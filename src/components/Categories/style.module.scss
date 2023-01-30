@@ -1,19 +1,19 @@
 .categories {
   display: flex;
   justify-content: space-between;
-  margin: 15px 0;
-  width: min(1000px, 100vw);
+  margin: 10px 50px 40px 50px;
+  width: min(900px, 100vw);
 }
 
 .category {
-  flex-basis: 100px;
+  flex-basis: 90px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
 
   & > img {
-    width: 100px;
+    width: 90px;
     height: 55px;
     object-fit: cover;
     border-radius: 4px;

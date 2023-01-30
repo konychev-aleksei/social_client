@@ -1,19 +1,21 @@
 import style from "./style.module.scss";
-import { IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-const SmallPost = ({ id, imageSrc }) => (
-  <>
-    <Link className={style.smallPost} to={`/post/${id}`}>
-      <img src={imageSrc} alt="" />
+const sx = {
+  color: "black",
+};
+
+const SmallPost = ({ id, author_nick }) => {
+  const imageSource = "http://localhost:5005/image/" + 1 + ".png";
+
+  return (
+    <Link to={`/post/${id}`} className={style.smallPost}>
+      <img src={imageSource} alt="" />
+      <h3>{author_nick}</h3>
     </Link>
-    <div className={style.author}>
-      <img src="" alt="" />
-      <p>245</p>
-      <FavoriteBorder />
-    </div>
-  </>
-);
+  );
+};
 
 export default SmallPost;

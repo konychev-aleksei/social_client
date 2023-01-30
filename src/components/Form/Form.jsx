@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { TextField, Button, Autocomplete } from "@mui/material";
-import { Done, Clear } from "@mui/icons-material";
+import { TextField, Autocomplete } from "@mui/material";
 import style from "./style.module.scss";
 import categories from "../../constants/categories";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import {
   useCreateMutation,
   useUpdateByIdMutation,
@@ -21,15 +19,22 @@ export const requiredMax = (maxLength) => ({
   },
 });
 
-const Form = ({ isCreation }) => {
-  const { id } = useParams();
-  const [fileUrl, setFileUrl] = useState("/image_placeholder.png");
+const Form = ({ post, isNew, setEditing }) => {
+  const { id, description, tags } = post;
+
+  const imageSource = "http://localhost:5005/image/" + id + ".png";
+
+  const [fileUrl, setFileUrl] = useState(
+    isNew ? "/image_placeholder.png" : imageSource
+  );
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: post,
+  });
 
   const [create] = useCreateMutation();
   const [updateById] = useUpdateByIdMutation();
@@ -42,19 +47,24 @@ const Form = ({ isCreation }) => {
   };
 
   const onSubmit = async (data) => {
-    const { location, description, tags, image } = data;
+    const { description, tags, image } = data;
 
     const formData = new FormData();
 
-    formData.append("location", location);
     formData.append("description", description);
-    formData.append("tags", tags);
-    formData.append("image", image[0]);
 
-    if (isCreation) {
+    tags.forEach((tag) => {
+      formData.append("tags[]", tag.tag);
+    });
+
+    if (isNew || image.length) {
+      formData.append("image", image[0]);
+    }
+
+    if (isNew) {
       create(formData);
     } else {
-      updateById(id, formData);
+      updateById({ id, post: formData });
     }
   };
 
@@ -67,7 +77,7 @@ const Form = ({ isCreation }) => {
           accept="image/*"
           name="image"
           {...register("image", {
-            required: true,
+            required: isNew,
             onChange: handleChangeImage,
           })}
           hidden
@@ -80,6 +90,7 @@ const Form = ({ isCreation }) => {
         size="small"
         label="Описание"
         multiline
+        defaultValue={description}
         {...register("description", requiredMax(200))}
         error={Boolean(errors.description)}
         helperText={errors.description?.message}
@@ -88,19 +99,17 @@ const Form = ({ isCreation }) => {
         multiple
         options={categories}
         getOptionLabel={(option) => option.name}
-        defaultValue={[]}
+        defaultValue={tags}
         filterSelectedOptions
         renderInput={(params) => <TextField {...params} label="Теги" />}
         onChange={(_, tags) => {
           setValue("tags", tags);
         }}
       />
-      <Button variant="contained" startIcon={<Done />} type="submit">
-        Опубликовать
-      </Button>
-      <Button variant="contained" startIcon={<Clear />}>
-        Удалить
-      </Button>
+      <div className={style.controls}>
+        <button type="submit">Сохранить</button>
+        {!isNew && <button onClick={() => setEditing(false)}>Отменить</button>}
+      </div>
     </form>
   );
 };
