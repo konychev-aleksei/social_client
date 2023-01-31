@@ -63,4 +63,4 @@ const useForm = ({ post, isNew }) => {
   };
 };
 
-export default Form;
+export default useForm;
