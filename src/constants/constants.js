@@ -1,1 +1,8 @@
-export const baseQuery = "http://localhost:5000";
+export const apiUrl = "http://localhost:5005";
+
+export const newPost = {
+  id: null,
+  description: "",
+  image: null,
+  tags: [],
+};

@@ -4,12 +4,16 @@ import style from "./style.module.scss";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../app/reducers/currentUser";
 import { useToggleLikeMutation } from "../../app/reducers/postApi";
+import useAuth from "../../hooks/useAuth";
+import useImageSource from "../../hooks/useImageSource";
 
 const sx = {
   color: "black",
 };
 
 const Post = ({ post, setEditing }) => {
+  const { isAuth } = useAuth();
+
   const {
     id,
     author_nick,
@@ -22,17 +26,12 @@ const Post = ({ post, setEditing }) => {
 
   const [toggleLike] = useToggleLikeMutation();
 
-  const imageSource = "http://localhost:5005/image/" + id + ".png";
-
-  const { isAuth } = useIsAuth();
-
+  const imageSource = useImageSource(id);
   const currentUser = useSelector(getCurrentUser);
-
   const canEdit = isAuth && author_nick === currentUser;
 
-  const handleToggleLike = async () => {
-    const a = await toggleLike(id);
-    console.log(a);
+  const handleToggleLike = () => {
+    toggleLike(id);
   };
 
   return (

@@ -12,17 +12,19 @@ const PostPage = () => {
   const [editing, setEditing] = useState(false);
 
   const { id } = useParams();
-  const { data: post, isLoading, error } = useGetByIdQuery(id);
+  const { data: post, isLoading, error, refetch } = useGetByIdQuery(id);
 
   return (
     <DataProvider data={post} isLoading={isLoading} error={error}>
-      <div className={style.wrapper}>
-        {editing ? (
-          <Form post={post} setEditing={setEditing} />
-        ) : (
-          <Post post={post} setEditing={setEditing} />
-        )}
-      </div>
+      {post && (
+        <div className={style.wrapper}>
+          {editing ? (
+            <Form post={post} setEditing={setEditing} refetch={refetch} />
+          ) : (
+            <Post post={post} setEditing={setEditing} />
+          )}
+        </div>
+      )}
     </DataProvider>
   );
 };

@@ -1,6 +1,6 @@
-import { baseQuery } from "../constants/constants";
+import { apiUrl } from "../constants/constants";
 
-const useImageSource = (id, isNew) =>
-  isNew ? "/image_placeholder.png" : `${baseQuery}/image/${id}.png`;
+const useImageSource = (id) =>
+  id ? `${apiUrl}/image/${id}.png` : "/image_placeholder.png";
 
 export default useImageSource;

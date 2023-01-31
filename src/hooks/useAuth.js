@@ -22,12 +22,12 @@ const useAuth = () => {
     (async () => {
       auth.onAuthStateChanged(async (user) => {
         if (user) {
-          const { displayName } = user;
+          const nick = user.email.split("@")[0];
 
           const token = await user.getIdToken();
           sessionStorage.setItem("auth", token);
 
-          dispatch(setCurrentUser(displayName));
+          dispatch(setCurrentUser(nick));
         } else {
           dispatch(clearCurrentUser());
           sessionStorage.removeItem("auth");

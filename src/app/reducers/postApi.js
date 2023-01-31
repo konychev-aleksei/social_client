@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import categories from "../../constants/categories";
+import { apiUrl } from "../../constants/constants";
 
-const baseUrl = "http://localhost:5005/post";
+const baseUrl = `${apiUrl}/post`;
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -12,7 +13,7 @@ export const postApi = createApi({
       query: (id) => `index?id=${id}`,
       transformResponse: (response) => {
         const tags = response.tags.map((tag) => {
-          return categories.find((category) => category.tag === tag);
+          return categories.find((category) => category.tag == tag);
         });
         return { ...response, tags };
       },

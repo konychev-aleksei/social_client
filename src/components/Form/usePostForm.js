@@ -2,15 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateMutation,
+  useGetByIdQuery,
   useUpdateByIdMutation,
 } from "../../app/reducers/postApi";
+import useImageSource from "../../hooks/useImageSource";
 
-const usePostForm = ({ post, isNew }) => {
-  const imageSource = "http://localhost:5005/image/" + post.id + ".png";
+const usePostForm = (post, isNew, setEditing, refetch) => {
+  const { id } = post;
+  const defaultImageUrl = useImageSource(id);
 
-  const [imageUrl, setImageUrl] = useState(
-    isNew ? "/image_placeholder.png" : imageSource
-  );
+  const [imageUrl, setImageUrl] = useState(defaultImageUrl);
   const {
     register,
     handleSubmit,
@@ -46,10 +47,13 @@ const usePostForm = ({ post, isNew }) => {
     }
 
     if (isNew) {
-      create(formData);
+      await create(formData);
     } else {
-      updateById({ id, post: formData });
+      await updateById({ id, post: formData });
+      await refetch();
     }
+
+    setEditing(false);
   };
 
   return {

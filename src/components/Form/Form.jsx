@@ -3,7 +3,7 @@ import style from "./style.module.scss";
 import categories from "../../constants/categories";
 import usePostForm from "./usePostForm";
 
-const Form = ({ post, isNew, setEditing }) => {
+const Form = ({ post, isNew, setEditing, refetch }) => {
   const {
     imageUrl,
     handleChangeImage,
@@ -12,7 +12,9 @@ const Form = ({ post, isNew, setEditing }) => {
     errors,
     handleSubmit,
     onSubmit,
-  } = usePostForm(post, isNew);
+  } = usePostForm(post, isNew, setEditing, refetch);
+
+  const { description, tags } = post;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
