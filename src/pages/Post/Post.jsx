@@ -6,18 +6,16 @@ import style from "./style.module.scss";
 import Post from "../../components/Form/Post";
 import Form from "../../components/Form/Form";
 
+import DataProvider from "../../UI/DataProvider/DataProvider";
+
 const PostPage = () => {
   const [editing, setEditing] = useState(false);
 
   const { id } = useParams();
   const { data: post, isLoading, error } = useGetByIdQuery(id);
 
-  if (isLoading) {
-    return null;
-  } else if (error) {
-    return null;
-  } else if (post) {
-    return (
+  return (
+    <DataProvider data={post} isLoading={isLoading} error={error}>
       <div className={style.wrapper}>
         {editing ? (
           <Form post={post} setEditing={setEditing} />
@@ -25,10 +23,8 @@ const PostPage = () => {
           <Post post={post} setEditing={setEditing} />
         )}
       </div>
-    );
-  }
-
-  return null;
+    </DataProvider>
+  );
 };
 
 export default PostPage;

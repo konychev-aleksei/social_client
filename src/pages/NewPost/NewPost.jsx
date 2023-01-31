@@ -7,7 +7,7 @@ const defaultPost = {
   tags: [],
 };
 
-const NewPost = () => {
+const NewPostPage = () => {
   return (
     <div className={style.wrapper}>
       <Form isNew post={defaultPost} />
@@ -15,4 +15,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default NewPostPage;

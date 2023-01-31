@@ -2,21 +2,32 @@ import { useEffect } from "react";
 import auth from "../constants/firebase";
 import { setCurrentUser, clearCurrentUser } from "../app/reducers/currentUser";
 import { useDispatch } from "react-redux";
+import firebase from "firebase/compat/app";
 
 const useAuth = () => {
   const dispatch = useDispatch();
+
+  const isAuth = Boolean(sessionStorage.getItem("auth"));
+
+  const handleSignIn = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
+
+  const handleLogOut = () => {
+    auth.signOut();
+  };
 
   useEffect(() => {
     (async () => {
       auth.onAuthStateChanged(async (user) => {
         if (user) {
-          const { email, displayName } = user;
-          const nick = email.split("@gmail")[0];
+          const { displayName } = user;
 
           const token = await user.getIdToken();
           sessionStorage.setItem("auth", token);
 
-          dispatch(setCurrentUser({ nick, displayName }));
+          dispatch(setCurrentUser(displayName));
         } else {
           dispatch(clearCurrentUser());
           sessionStorage.removeItem("auth");
@@ -25,7 +36,7 @@ const useAuth = () => {
     })();
   }, [dispatch]);
 
-  return Boolean(sessionStorage.getItem("auth"));
+  return { isAuth, handleSignIn, handleLogOut };
 };
 
 export default useAuth;

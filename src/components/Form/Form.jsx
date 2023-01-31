@@ -1,77 +1,24 @@
-import { useState } from "react";
 import { TextField, Autocomplete } from "@mui/material";
 import style from "./style.module.scss";
 import categories from "../../constants/categories";
 import { useForm } from "react-hook-form";
-import {
-  useCreateMutation,
-  useUpdateByIdMutation,
-} from "../../app/reducers/postApi";
-
-export const requiredMax = (maxLength) => ({
-  required: {
-    value: true,
-    message: "Поле обязательно",
-  },
-  maxLength: {
-    value: maxLength,
-    message: `Максимальная длина - ${maxLength} символов`,
-  },
-});
+import useForm from "./useForm";
 
 const Form = ({ post, isNew, setEditing }) => {
-  const { id, description, tags } = post;
-
-  const imageSource = "http://localhost:5005/image/" + id + ".png";
-
-  const [fileUrl, setFileUrl] = useState(
-    isNew ? "/image_placeholder.png" : imageSource
-  );
   const {
+    imageUrl,
+    handleChangeImage,
     register,
-    handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: post,
-  });
-
-  const [create] = useCreateMutation();
-  const [updateById] = useUpdateByIdMutation();
-
-  const handleChangeImage = async (event) => {
-    const file = event.target.files[0];
-    const url = URL.createObjectURL(file);
-
-    setFileUrl(url);
-  };
-
-  const onSubmit = async (data) => {
-    const { description, tags, image } = data;
-
-    const formData = new FormData();
-
-    formData.append("description", description);
-
-    tags.forEach((tag) => {
-      formData.append("tags[]", tag.tag);
-    });
-
-    if (isNew || image.length) {
-      formData.append("image", image[0]);
-    }
-
-    if (isNew) {
-      create(formData);
-    } else {
-      updateById({ id, post: formData });
-    }
-  };
+    errors,
+    handleSubmit,
+    onSubmit,
+  } = useForm(post, isNew);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
       <label>
-        <img className={style.image} src={fileUrl} alt="" />
+        <img className={style.image} src={imageUrl} alt="" />
         <input
           type="file"
           accept="image/*"
@@ -91,7 +38,16 @@ const Form = ({ post, isNew, setEditing }) => {
         label="Описание"
         multiline
         defaultValue={description}
-        {...register("description", requiredMax(200))}
+        {...register("description", {
+          required: {
+            value: true,
+            message: "Поле обязательно",
+          },
+          maxLength: {
+            value: 200,
+            message: `Максимальная длина - 200 символов`,
+          },
+        })}
         error={Boolean(errors.description)}
         helperText={errors.description?.message}
       />

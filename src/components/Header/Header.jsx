@@ -3,21 +3,12 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { LogoutOutlined, LoginOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import useAuth from "../../hooks/useAuth";
 import { getCurrentUser } from "../../app/reducers/currentUser";
-import auth from "../../constants/firebase";
-import firebase from "firebase/compat/app";
 
 const Header = () => {
-  const { nick } = useSelector(getCurrentUser);
-
-  const handleSignIn = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
-
-  const handleLogOut = () => {
-    auth.signOut();
-  };
+  const currentUser = useSelector(getCurrentUser);
+  const { handleLogOut, handleSignIn } = useAuth();
 
   const homePageLink = (
     <Link to="/home" className={style.home}>
@@ -26,10 +17,10 @@ const Header = () => {
     </Link>
   );
 
-  const authButton = nick ? (
+  const authButton = currentUser ? (
     <>
-      <p className={style.myProfile} to={`/profile/${nick}`}>
-        {nick}
+      <p className={style.myProfile} to={`/profile/${currentUser}`}>
+        {currentUser}
       </p>
       <Button startIcon={<LogoutOutlined />} onClick={handleLogOut}>
         Выйти

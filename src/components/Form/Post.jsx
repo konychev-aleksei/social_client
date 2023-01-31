@@ -1,7 +1,6 @@
 import { Button, Chip } from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import style from "./style.module.scss";
-import useIsAuth from "../../hooks/useIsAuth";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../app/reducers/currentUser";
 import { useToggleLikeMutation } from "../../app/reducers/postApi";
@@ -25,11 +24,11 @@ const Post = ({ post, setEditing }) => {
 
   const imageSource = "http://localhost:5005/image/" + id + ".png";
 
-  const isAuth = useIsAuth();
+  const { isAuth } = useIsAuth();
 
-  const { nick } = useSelector(getCurrentUser);
+  const currentUser = useSelector(getCurrentUser);
 
-  const canEdit = isAuth && author_nick === nick;
+  const canEdit = isAuth && author_nick === currentUser;
 
   const handleToggleLike = async () => {
     const a = await toggleLike(id);
