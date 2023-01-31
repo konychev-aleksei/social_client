@@ -5,7 +5,7 @@ import {
   useUpdateByIdMutation,
 } from "../../app/reducers/postApi";
 
-const useForm = ({ post, isNew }) => {
+const usePostForm = ({ post, isNew }) => {
   const imageSource = "http://localhost:5005/image/" + post.id + ".png";
 
   const [imageUrl, setImageUrl] = useState(
@@ -63,4 +63,4 @@ const useForm = ({ post, isNew }) => {
   };
 };
 
-export default useForm;
+export default usePostForm;

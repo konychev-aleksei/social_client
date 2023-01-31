@@ -1,8 +1,7 @@
 import { TextField, Autocomplete } from "@mui/material";
 import style from "./style.module.scss";
 import categories from "../../constants/categories";
-import { useForm } from "react-hook-form";
-import useForm from "./useForm";
+import usePostForm from "./usePostForm";
 
 const Form = ({ post, isNew, setEditing }) => {
   const {
@@ -13,7 +12,7 @@ const Form = ({ post, isNew, setEditing }) => {
     errors,
     handleSubmit,
     onSubmit,
-  } = useForm(post, isNew);
+  } = usePostForm(post, isNew);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
