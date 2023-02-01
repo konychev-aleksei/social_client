@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import categories from "../../constants/categories";
-import { apiUrl } from "../../constants/constants";
+import { categories, apiUrl } from "../../constants";
 
 const baseUrl = `${apiUrl}/post`;
+
+const headers = {
+  token: sessionStorage.getItem("auth"),
+};
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -10,13 +13,14 @@ export const postApi = createApi({
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getById: builder.query({
-      query: (id) => `index?id=${id}`,
+      query: (id) => ({ url: `index?id=${id}`, headers }),
       transformResponse: (response) => {
         const tags = response.tags.map((tag) => {
-          return categories.find((category) => category.tag == tag);
+          return categories.find((category) => category.tag === tag);
         });
         return { ...response, tags };
       },
+      invalidatesTags: ["Post"],
     }),
     get: builder.query({
       query: (tag) => `get?tag=${tag ?? ""}`,
@@ -27,9 +31,7 @@ export const postApi = createApi({
         url: `create`,
         method: "POST",
         body: post,
-        headers: {
-          token: sessionStorage.getItem("auth"),
-        },
+        headers,
       }),
       invalidatesTags: ["Post"],
     }),
@@ -38,9 +40,7 @@ export const postApi = createApi({
         url: `update?id=${id}`,
         method: "PUT",
         body: post,
-        headers: {
-          token: sessionStorage.getItem("auth"),
-        },
+        headers,
       }),
       invalidatesTags: ["Post"],
     }),
@@ -48,6 +48,7 @@ export const postApi = createApi({
       query: (postId) => ({
         url: `delete?id=${postId}`,
         method: "DELETE",
+        headers,
       }),
       invalidatesTags: ["Post"],
     }),
@@ -55,9 +56,7 @@ export const postApi = createApi({
       query: (id) => ({
         url: `toggle-like?id=${id}`,
         method: "PATCH",
-        headers: {
-          token: sessionStorage.getItem("auth"),
-        },
+        headers,
       }),
       invalidatesTags: ["Post"],
     }),
