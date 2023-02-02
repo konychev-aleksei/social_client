@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetByIdQuery } from "../../app/reducers/postApi";
-import Error from "../../UI/Error";
-import Loading from "../../UI/Loading";
-import Post from "../../components/Form/Post";
-import Form from "../../components/Form/Form";
+import { useGetByIdQuery } from "../app/reducers/postApi";
+import Error from "../UI/Error";
+import Loading from "../UI/Loading";
+import Post from "../components/Form/Post";
+import Form from "../components/Form/Form";
 import style from "./style.module.scss";
 
 const PostPage = () => {

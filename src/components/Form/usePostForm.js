@@ -24,8 +24,8 @@ const usePostForm = (post, isNew, setEditing) => {
     defaultValues: post,
   });
 
-  const [create, { error: creationError }] = useCreateMutation();
-  const [updateById, { error: updatingError }] = useUpdateByIdMutation();
+  const [create] = useCreateMutation();
+  const [updateById] = useUpdateByIdMutation();
 
   const handleChangeImage = async (event) => {
     const file = event.target.files[0];
@@ -50,18 +50,18 @@ const usePostForm = (post, isNew, setEditing) => {
     }
 
     if (isNew) {
-      await create(formData);
+      const { error } = await create(formData);
 
-      if (creationError) {
+      if (error) {
         alert(ERROR);
         return;
       }
 
       navigate("/home");
     } else {
-      await updateById({ id, post: formData });
+      const { error } = await updateById({ id, post: formData });
 
-      if (updatingError) {
+      if (error) {
         alert(ERROR);
         return;
       }

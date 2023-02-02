@@ -1,6 +1,6 @@
 import { TextField, Autocomplete } from "@mui/material";
 import style from "./style.module.scss";
-import { categories } from "../../constants";
+import { tagsList } from "../../constants";
 import usePostForm from "./usePostForm";
 
 const Form = ({ post, isNew, setEditing }) => {
@@ -54,7 +54,7 @@ const Form = ({ post, isNew, setEditing }) => {
       />
       <Autocomplete
         multiple
-        options={categories}
+        options={tagsList}
         getOptionLabel={(option) => option.name}
         defaultValue={tags}
         filterSelectedOptions

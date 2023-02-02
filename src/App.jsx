@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./pages/Home/Home";
-import NewPostPage from "./pages/NewPost/NewPost";
-import PostPage from "./pages/Post/Post";
+import HomePage from "./pages/Home";
+import NewPostPage from "./pages/NewPost";
+import PostPage from "./pages/Post";
 
 import Header from "./components/Header/Header";
 import useAuth from "./hooks/useAuth";

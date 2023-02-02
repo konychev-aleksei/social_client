@@ -16,7 +16,7 @@ export const PostsList = () => {
   } else if (posts) {
     return (
       <div className={style.grid}>
-        {posts && posts.map((post) => <SmallPost {...post} />)}
+        {posts && posts.map((post) => <SmallPost key={post.id} {...post} />)}
       </div>
     );
   }

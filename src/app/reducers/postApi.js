@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { categories, apiUrl } from "../../constants";
+import { tagsList, apiUrl } from "../../constants";
 
 const baseUrl = `${apiUrl}/post`;
 
@@ -15,16 +15,16 @@ export const postApi = createApi({
     getById: builder.query({
       query: (id) => ({ url: `index?id=${id}`, headers }),
       transformResponse: (response) => {
-        const tags = response.tags.map((tag) => {
-          return categories.find((category) => category.tag === tag);
+        const tags = response.tags.map((id) => {
+          return tagsList.find((tag) => tag.id === id);
         });
         return { ...response, tags };
       },
-      invalidatesTags: ["Post"],
+      providesTags: ["Post"],
     }),
     get: builder.query({
       query: (tag) => `get?tag=${tag ?? ""}`,
-      invalidatesTags: ["Post"],
+      providesTags: ["Post"],
     }),
     create: builder.mutation({
       query: (post) => ({

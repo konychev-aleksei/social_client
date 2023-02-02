@@ -2,7 +2,9 @@
   display: flex;
   justify-content: center;
   margin: 35px auto;
+}
 
+.column {
   flex-direction: column;
   width: min(1000px, 100vw);
 }

@@ -16,6 +16,11 @@ const Post = ({ post, setEditing }) => {
   const navigate = useNavigate();
   const { isAuth } = useAuth();
 
+  const [deleteById] = useDeleteByIdMutation();
+  const [toggleLike, { isLoading: isLikeToggling }] = useToggleLikeMutation();
+
+  const currentUser = useSelector(getCurrentUser);
+
   const {
     id,
     author_nick,
@@ -26,18 +31,13 @@ const Post = ({ post, setEditing }) => {
     created_on,
   } = post;
 
-  const [deleteById, { error: deleteError }] = useDeleteByIdMutation();
-  const [toggleLike, { error: likeError, isLoading: isLikeToggling }] =
-    useToggleLikeMutation();
-
   const imageSource = useImageSource(id);
-  const currentUser = useSelector(getCurrentUser);
   const canEdit = isAuth && author_nick === currentUser;
 
   const handleDeletePost = async () => {
-    await deleteById(id);
+    const { error } = await deleteById(id);
 
-    if (deleteError) {
+    if (error) {
       alert(ERROR);
       return;
     }
@@ -46,9 +46,9 @@ const Post = ({ post, setEditing }) => {
   };
 
   const handleToggleLike = async () => {
-    await toggleLike(id);
+    const { error } = await toggleLike(id);
 
-    if (likeError) {
+    if (error) {
       alert(ERROR);
     }
   };
@@ -74,7 +74,7 @@ const Post = ({ post, setEditing }) => {
       <p>{description}</p>
       <div className={style.tags}>
         {tags.map((tag) => (
-          <Chip label={tag.name} />
+          <Chip key={tag.tag} label={tag.name} />
         ))}
       </div>
       <i>{created_on}</i>

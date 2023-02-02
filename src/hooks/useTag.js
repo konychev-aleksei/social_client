@@ -5,7 +5,7 @@ const useTag = () => {
   const params = new URLSearchParams(search);
   const tag = params.get("tag");
 
-  return tag;
+  return tag || "";
 };
 
 export default useTag;

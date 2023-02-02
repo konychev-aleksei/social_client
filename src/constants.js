@@ -7,45 +7,45 @@ export const newPost = {
   tags: [],
 };
 
-export const categories = [
+export const tagsList = [
   {
-    name: "Дизайн",
-    tag: "",
+    name: "Все",
+    id: "",
     image: "https://i.ibb.co/J3PcqZL/design.png",
   },
   {
     name: "Архитектура",
-    tag: 2,
+    id: 1,
     image: "https://i.ibb.co/6885ynG/architecture.jpg",
   },
   {
     name: "Искусство",
-    tag: 3,
+    id: 2,
     image: "https://i.ibb.co/nwGHF11/art.jpg",
   },
   {
     name: "Путешествия",
-    tag: 4,
+    id: 3,
     image: "https://i.ibb.co/xXkJxF8/travel.jpg",
   },
   {
     name: "Природа",
-    tag: 5,
+    id: 4,
     image: "https://i.ibb.co/6Hz0T8H/nature.jpg",
   },
   {
     name: "Стиль",
-    tag: 6,
+    id: 5,
     image: "https://i.ibb.co/Vwf7mzJ/style.jpg",
   },
   {
-    name: "Животные",
-    tag: 7,
+    name: "Котики",
+    id: 6,
     image: "https://i.ibb.co/gg45s16/animals.jpg",
   },
   {
-    name: "Фитнес",
-    tag: 8,
+    name: "Автомобили",
+    id: 7,
     image: "https://i.ibb.co/mF0jyBH/fitness.jpg",
   },
 ];
