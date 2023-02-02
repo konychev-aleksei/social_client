@@ -1,4 +1,4 @@
-import { apiUrl } from "../constants/constants";
+import { apiUrl } from "../constants";
 
 const useImageSource = (id) =>
   id ? `${apiUrl}/image/${id}.png` : "/image_placeholder.png";

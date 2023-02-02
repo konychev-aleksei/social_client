@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import auth from "../constants/firebase";
+import auth from "../config/firebase";
 import { setCurrentUser, clearCurrentUser } from "../app/reducers/currentUser";
 import { useDispatch } from "react-redux";
 import firebase from "firebase/compat/app";

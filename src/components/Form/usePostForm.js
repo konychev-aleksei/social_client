@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateMutation,
-  useGetByIdQuery,
   useUpdateByIdMutation,
 } from "../../app/reducers/postApi";
 import useImageSource from "../../hooks/useImageSource";
+import { ERROR } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
-const usePostForm = (post, isNew, setEditing, refetch) => {
+const usePostForm = (post, isNew, setEditing) => {
   const { id } = post;
+
+  const navigate = useNavigate();
   const defaultImageUrl = useImageSource(id);
 
   const [imageUrl, setImageUrl] = useState(defaultImageUrl);
@@ -21,8 +24,8 @@ const usePostForm = (post, isNew, setEditing, refetch) => {
     defaultValues: post,
   });
 
-  const [create] = useCreateMutation();
-  const [updateById] = useUpdateByIdMutation();
+  const [create, { error: creationError }] = useCreateMutation();
+  const [updateById, { error: updatingError }] = useUpdateByIdMutation();
 
   const handleChangeImage = async (event) => {
     const file = event.target.files[0];
@@ -48,12 +51,23 @@ const usePostForm = (post, isNew, setEditing, refetch) => {
 
     if (isNew) {
       await create(formData);
+
+      if (creationError) {
+        alert(ERROR);
+        return;
+      }
+
+      navigate("/home");
     } else {
       await updateById({ id, post: formData });
-      await refetch();
-    }
 
-    setEditing(false);
+      if (updatingError) {
+        alert(ERROR);
+        return;
+      }
+
+      setEditing(false);
+    }
   };
 
   return {

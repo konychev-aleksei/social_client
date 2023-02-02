@@ -1,9 +1,9 @@
 import { TextField, Autocomplete } from "@mui/material";
 import style from "./style.module.scss";
-import categories from "../../constants/categories";
+import { categories } from "../../constants";
 import usePostForm from "./usePostForm";
 
-const Form = ({ post, isNew, setEditing, refetch }) => {
+const Form = ({ post, isNew, setEditing }) => {
   const {
     imageUrl,
     handleChangeImage,
@@ -12,7 +12,7 @@ const Form = ({ post, isNew, setEditing, refetch }) => {
     errors,
     handleSubmit,
     onSubmit,
-  } = usePostForm(post, isNew, setEditing, refetch);
+  } = usePostForm(post, isNew, setEditing);
 
   const { description, tags } = post;
 

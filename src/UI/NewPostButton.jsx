@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getCurrentUser } from "../../app/reducers/currentUser";
+import { getCurrentUser } from "../app/reducers/currentUser";
 import style from "./style.module.scss";
 
 const sx = {

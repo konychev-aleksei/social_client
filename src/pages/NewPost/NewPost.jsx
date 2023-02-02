@@ -1,6 +1,6 @@
 import style from "./style.module.scss";
 import Form from "../../components/Form/Form";
-import { newPost } from "../../constants/constants";
+import { newPost } from "../../constants";
 
 const NewPostPage = () => {
   return (
