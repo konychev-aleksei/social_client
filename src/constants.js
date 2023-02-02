@@ -31,7 +31,7 @@ export const tagsList = [
   {
     name: "Природа",
     id: 4,
-    image: "https://i.ibb.co/6Hz0T8H/nature.jpg",
+    image: "https://i.ibb.co/Np7ZwM1/nature.jpg",
   },
   {
     name: "Стиль",
@@ -41,12 +41,12 @@ export const tagsList = [
   {
     name: "Котики",
     id: 6,
-    image: "https://i.ibb.co/gg45s16/animals.jpg",
+    image: "https://i.ibb.co/y54zq6Y/cat.jpg",
   },
   {
     name: "Автомобили",
     id: 7,
-    image: "https://i.ibb.co/mF0jyBH/fitness.jpg",
+    image: "https://i.ibb.co/6b9mmrN/cars.jpg",
   },
 ];
 

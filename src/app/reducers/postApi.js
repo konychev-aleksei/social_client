@@ -10,7 +10,7 @@ const headers = {
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["Post"],
+  tagTypes: ["Post", "Posts"],
   endpoints: (builder) => ({
     getById: builder.query({
       query: (id) => ({ url: `index?id=${id}`, headers }),
@@ -24,7 +24,7 @@ export const postApi = createApi({
     }),
     get: builder.query({
       query: (tag) => `get?tag=${tag ?? ""}`,
-      providesTags: ["Post"],
+      providesTags: ["Posts"],
     }),
     create: builder.mutation({
       query: (post) => ({
@@ -33,7 +33,7 @@ export const postApi = createApi({
         body: post,
         headers,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Posts"],
     }),
     updateById: builder.mutation({
       query: ({ id, post }) => ({
@@ -42,7 +42,7 @@ export const postApi = createApi({
         body: post,
         headers,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Post", "Posts"],
     }),
     deleteById: builder.mutation({
       query: (postId) => ({
@@ -50,7 +50,7 @@ export const postApi = createApi({
         method: "DELETE",
         headers,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Posts", "Posts"],
     }),
     toggleLike: builder.mutation({
       query: (id) => ({

@@ -35,20 +35,18 @@ const Post = ({ post, setEditing }) => {
   const canEdit = isAuth && author_nick === currentUser;
 
   const handleDeletePost = async () => {
-    const { error } = await deleteById(id);
-
-    if (error) {
+    try {
+      await deleteById(id).unwrap();
+      navigate("/home");
+    } catch (error) {
       alert(ERROR);
-      return;
     }
-
-    navigate("/home");
   };
 
   const handleToggleLike = async () => {
-    const { error } = await toggleLike(id);
-
-    if (error) {
+    try {
+      await toggleLike(id).unwrap();
+    } catch (error) {
       alert(ERROR);
     }
   };

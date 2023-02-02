@@ -1,4 +1,4 @@
-import SmallPost from "../../components/Post/SmallPost";
+import SmallPost from "../Post/SmallPost";
 import { useGetQuery } from "../../app/reducers/postApi";
 import useTag from "../../hooks/useTag";
 import style from "./style.module.scss";

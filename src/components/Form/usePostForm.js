@@ -50,23 +50,19 @@ const usePostForm = (post, isNew, setEditing) => {
     }
 
     if (isNew) {
-      const { error } = await create(formData);
-
-      if (error) {
+      try {
+        await create(formData).unwrap();
+        navigate("/home");
+      } catch (error) {
         alert(ERROR);
-        return;
       }
-
-      navigate("/home");
     } else {
-      const { error } = await updateById({ id, post: formData });
-
-      if (error) {
+      try {
+        await updateById({ id, post: formData }).unwrap();
+        setEditing(false);
+      } catch (error) {
         alert(ERROR);
-        return;
       }
-
-      setEditing(false);
     }
   };
 
