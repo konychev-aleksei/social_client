@@ -54,7 +54,7 @@ const Form = ({ post, isNew, setEditing }) => {
       />
       <Autocomplete
         multiple
-        options={tagsList}
+        options={tagsList.slice(1)}
         getOptionLabel={(option) => option.name}
         defaultValue={tags}
         filterSelectedOptions

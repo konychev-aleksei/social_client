@@ -42,7 +42,7 @@ const usePostForm = (post, isNew, setEditing) => {
     formData.append("description", description);
 
     tags.forEach((tag) => {
-      formData.append("tags[]", tag.tag);
+      formData.append("tags[]", tag.id);
     });
 
     if (isNew || image.length) {
